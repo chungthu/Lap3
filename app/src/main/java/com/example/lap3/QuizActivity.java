@@ -1,5 +1,6 @@
 package com.example.lap3;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,9 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.lap3.model.Lap3Response;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -166,8 +170,18 @@ public class QuizActivity extends AppCompatActivity {
 
 
         if (position == Common.SIZE -1){
-            startActivity(new Intent(QuizActivity.this,ResultActivity.class));
-            finish();
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.show();
+
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    startActivity(new Intent(QuizActivity.this,ResultActivity.class));
+                    finish();
+                    progressDialog.dismiss();
+                }
+            },3000);
         }
 
         if (position < Common.SIZE - 1) {
@@ -212,7 +226,7 @@ public class QuizActivity extends AppCompatActivity {
         ck3.setChecked(bl_3);
         ck4.setChecked(bl_4);
 
-        txt_result = tvAnswer1.getText().toString();
+        txt_result = tvAnswer1.getText().toString().trim();
     }
 
     public void answar2(View view) {
@@ -226,7 +240,7 @@ public class QuizActivity extends AppCompatActivity {
         ck2.setChecked(bl_2);
         ck3.setChecked(bl_3);
         ck4.setChecked(bl_4);
-        txt_result = tvAnswer2.getText().toString();
+        txt_result = tvAnswer2.getText().toString().trim();
 
     }
 
@@ -241,7 +255,7 @@ public class QuizActivity extends AppCompatActivity {
         ck2.setChecked(bl_2);
         ck3.setChecked(bl_3);
         ck4.setChecked(bl_4);
-        txt_result = tvAnswer3.getText().toString();
+        txt_result = tvAnswer3.getText().toString().trim();
 
     }
 
@@ -256,7 +270,7 @@ public class QuizActivity extends AppCompatActivity {
         ck2.setChecked(bl_2);
         ck3.setChecked(bl_3);
         ck4.setChecked(bl_4);
-        txt_result = tvAnswer4.getText().toString();
+        txt_result = tvAnswer4.getText().toString().trim();
 
     }
 }
